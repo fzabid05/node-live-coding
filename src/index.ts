@@ -28,7 +28,7 @@ const asyncErrorHandler = (callback: Function) => (req: Request, res: Response) 
 };
 
 server.get("/", (req: Request, res: Response) => {
-  res.send("Hello over HTTP");
+  res.send("Hello ");
 });
 
 server.post("/api/wilders", asyncErrorHandler(wilderControllers.create));
