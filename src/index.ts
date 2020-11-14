@@ -16,12 +16,21 @@ mongoose
 
 const server = express().use(express.json());
 
-const asyncErrorHandler = (callback: Function) => (
-  req: Request,
-  res: Response,
-) => {
-  callback(req, res).catch((err: any) => {
-    if (err.name === 'MongoError' && err.code === 11000) {
+type MongoError = Error & {
+  code: number;
+  keyPattern: {
+    name: string;
+  };
+};
+
+const isMongoError = (error: Error): error is MongoError =>
+  error.name === 'MongoError';
+
+const asyncErrorHandler = (
+  callback: (req: Request, res: Response) => Promise<void>,
+) => (req: Request, res: Response) => {
+  callback(req, res).catch((err: Error) => {
+    if (isMongoError(err) && err.code === 11000) {
       const error = err.keyPattern.name
         ? 'Name already exists'
         : 'Duplicate field';
