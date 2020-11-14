@@ -1,11 +1,9 @@
-import mongoose from "mongoose";
+import { Schema, model } from 'mongoose';
 
-const Schema = mongoose.Schema;
-const WilderSchema = new Schema 
-({
-    name: { type: String, unique: true },
+const WilderSchema = new Schema({
+  name: { type: String, unique: true },
   city: String,
   skills: [{ title: String, voteCount: Number }],
 });
 
-module.exports = mongoose.model("wilder", WilderSchema);
+export default model('wilder', WilderSchema);

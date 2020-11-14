@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-const WilderModel = require("../models/Wilder");
+import { Request, Response } from 'express';
+import WilderModel from '../models/Wilder';
 
 export default {
   get: async (req: Request, res: Response) => {
@@ -20,7 +20,7 @@ export default {
     res.json({ result });
   },
   delete: async (req: Request, res: Response) => {
-    const id = req.params.id;
+    const { id } = req.params;
     const result = await WilderModel.findByIdAndDelete(id);
     res.json({ result });
   },
